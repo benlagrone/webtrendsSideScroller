@@ -1,0 +1,632 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript">
+    google.load("visualization", "1", {packages: ["corechart"]});
+
+    var bounceRate = function () {
+        var dataSet = [
+            ['Year', 'Mobile', 'Tablet', 'Desktop'],
+            ['2012', 73.8, 62.7, 50.6],
+            ['2013', 77.9, 66.2, 53.7],
+            ['2014', 73.9, 67, 51.1]
+        ];
+        var title = 'Exit rate';
+        var divId = 'bounceRate';
+        drawColumnChart(dataSet, divId, title)
+    };
+    google.setOnLoadCallback(bounceRate);
+
+
+    var timeSpentMobile = function () {
+        var dataSet = [
+            ['Year', '< 1 minute', '1-5 minutes', '5-10 minutes', '10-30 minutes', '30-60 minutes', '1-2 hours', '2-5 hours'],
+            ['2012', 9.8, 18.2, 10.2, 14.4, 3.9, 0.6, 0.1],
+            ['2013', 9.4, 15.9, 8.7, 12.6, 3.3, 0.6, 0.1],
+            ['2014', 10.9, 17.7, 9.1, 12.1, 3.1, 0.6, 0]
+        ];
+        var title = "Time spent on a Mobile Phone";
+        var divId = "timeSpentMobile";
+        drawLineChart(dataSet, divId, title)
+    };
+    google.setOnLoadCallback(timeSpentMobile);
+
+    var timeSpentTablet = function () {
+        var dataSet = [
+            ['Year', '< 1 minute', '1-5 minutes', '5-10 minutes', '10-30 minutes', '30-60 minutes', '1-2 hours', '2-5 hours'],
+            ['2012', 9.1, 19.9, 13.9, 23, 8.4, 1.9, 0.2],
+            ['2013', 8.8, 18.8, 13.1, 21.6, 8, 2, 0.2],
+            ['2014', 9.1, 18.6, 12.3, 20.3, 7.5, 2, 0.1]
+        ];
+        var title = "Time spent on a Tablet";
+        var divId = "timeSpentTablet";
+        drawLineChart(dataSet, divId, title)
+    };
+    google.setOnLoadCallback(timeSpentTablet);
+
+    var timeSpentDesktop = function () {
+        var dataSet = [
+            ['Year', '< 1 minute', '1-5 minutes', '5-10 minutes', '10-30 minutes', '30-60 minutes', '1-2 hours', '2-5 hours'],
+            ['2012', 9.1, 19.9, 13.9, 23, 8.4, 1.9, 0.2],
+            ['2013', 8.8, 18.8, 13.1, 21.6, 8, 2, 0.2],
+            ['2014', 9.1, 18.6, 12.3, 20.3, 7.5, 2, 0.1]
+        ];
+        var title = "Time spent on a Desktop";
+        var divId = "timeSpentDesktop";
+        drawLineChart(dataSet, divId, title)
+    };
+    google.setOnLoadCallback(timeSpentDesktop);
+
+    var mobileUsers2012 = function () {
+        var dataSet = [
+            ['Users', 'Percent'],
+            ['Mobile Phone', 7.5],
+            ['Tablet' , 6.8],
+            ['Desktop', 85.5]
+        ];
+        var title = 'Mobile Users in 2012';
+        var divId = 'mobileUsers2012';
+        drawPieChart(dataSet, divId, title)
+    };
+    google.setOnLoadCallback(mobileUsers2012);
+
+    var mobileUsers2013 = function () {
+        var dataset = [
+            ['Users', 'Percent'],
+            ['Mobile Phone', 11.9],
+            ['Tablet' , 9.2],
+            ['Desktop', 78.7]
+        ];
+        var title = 'Mobile Users in 2013';
+        var divId = 'mobileUsers2013';
+        drawPieChart(dataset, divId, title)
+    };
+    google.setOnLoadCallback(mobileUsers2013);
+
+    var mobileUsers2014 = function () {
+        var dataSet = [
+            ['Users', 'Percent'],
+            ['Mobile Phone', 14.5],
+            ['Tablet' , 11.9],
+            ['Desktop', 73.4]
+        ];
+        var title = 'Mobile Users in 2014';
+        var divId = 'mobileUsers2014';
+        drawPieChart(dataSet, divId, title)
+    };
+    google.setOnLoadCallback(mobileUsers2014);
+
+    var datasetTotalChart = function () {
+        var dataSet = [
+            ['Activity', 'Time'],
+            ['Exit', 65.7],
+            ['Cancer Information', 12.42],
+            ['Finding MDAnderson', 6.13],
+            ['Jobs', 3.66],
+            ['Treatment research', 3.64],
+            ['Volunteer/Give' , 0.52],
+            ['Trials Information', 0.23]
+        ];
+        var title = 'What visitors do on m.MDAnderson.org';
+        var divId = 'visitorActivitiesTotal';
+        drawPieChart(dataSet, divId, title)
+    };
+    google.setOnLoadCallback(datasetTotalChart);
+
+    var datasetChart = function () {
+        var dataSet = [
+            ['Activity', 'Time'],
+            ['Cancer Information', 12.42],
+            ['Finding MDAnderson', 6.13],
+            ['Jobs', 3.66],
+            ['Treatment research', 3.64],
+            ['Volunteer/Give' , 0.52],
+            ['Trials Information', 0.23]
+        ];
+        var title = 'What visitors do on m.MDAnderson.org, when they do not leave';
+        var divId = 'visitorActivities';
+        drawPieChart(dataSet, divId, title)
+    }
+    google.setOnLoadCallback(datasetChart);
+
+    function drawLineChart(dataset, id, title) {
+        var data = google.visualization.arrayToDataTable(dataset);
+        var options = {
+            title: title,
+            hAxis: {title: 'Year', titleTextStyle: {color: 'blue'}},
+            curveType: 'function',
+            legend: { position: 'bottom' }
+        };
+        var chart = new google.visualization.LineChart(document.getElementById(id));
+        chart.draw(data, options);
+    }
+
+    function drawColumnChart(dataset, id, title) {
+        var data = google.visualization.arrayToDataTable(dataset);
+        var options = {
+            title: title,
+            hAxis: {title: 'Year', titleTextStyle: {color: 'blue'}},
+            legend: { position: 'bottom' },
+            seriesType: "bars",
+            series: {5: {type: "line"}}
+        };
+        var chart = new google.visualization.ComboChart(document.getElementById(id));
+        chart.draw(data, options);
+    }
+
+    function drawPieChart(dataset, id, title) {
+        var data = google.visualization.arrayToDataTable(dataset);
+        var options = {
+            title: title,
+            is3D: true
+        };
+        var chart = new google.visualization.PieChart(document.getElementById(id));
+        chart.draw(data, options);
+    }
+</script>
+<style>
+    body {
+        background-color: #666;
+        overflow-x: hidden;
+    }
+
+    body > .row {
+        padding: 20px 0;
+        min-height: 100%;
+        background-position: 0px 0%;
+        overflow: hidden;
+    }
+
+    .container {
+        z-index: 999;
+        position: relative;
+    }
+
+    .container .row {
+        padding: 0px;
+    }
+
+    .group {
+        padding: 20px 5px;;
+        background-color: #fff;
+        border-radius: 8px;
+    }
+
+    .group .label {
+        font-size: 140%;
+        padding-bottom: 3px;
+        margin-left: 4px;
+    }
+
+    svg {
+        padding: 5px;
+    }
+
+    .panel-heading i {
+        float: left;
+    }
+
+    .panel-heading h3 {
+        margin-left: 45px;
+    }
+
+    .quote .img-wrap {
+        width: 12%;
+        float: left;
+    }
+
+    .quote p {
+        float: left;
+        margin-left: 20px;
+    }
+
+    .quote img {
+        border-radius: 12px;
+        width: 100%;
+        height: auto;
+    }
+
+    #row-1 {
+        background-color: #CB6015;
+    }
+
+    #row-2 {
+        background-color: #000000;
+    }
+
+    #row-3 {
+        background-color: #63666A;
+    }
+
+    #row-4 {
+        background-color: #614B79;
+    }
+
+    #row-5 {
+        background-color: #789D4A;
+    }
+
+    #row-6 {
+        background-color: #407EC9;
+    }
+
+    #row-7 {
+        background-color: #F1B434;
+    }
+
+    .scrollMe {
+        position: fixed;
+        background: transparent;
+        height: 20px;
+        top: auto;
+        bottom: 20%;
+        left: 62%;
+        text-align: -webkit-auto;
+        color: #fff;
+        opacity: 0.3;
+        font-size: 140%;
+    }
+
+    .scrollMe:hover {
+        opacity: .7
+    }
+
+    .scrollMe:hover::after {
+        content: "* Scroll down to read content."
+    }
+
+    .scrollIcon {
+        position: absolute;
+        font-size: 6000%;
+        opacity: 0.1;
+        color: #ffffff;
+        float: left;
+        overflow: hidden;
+    }
+
+    .scrollIcon i {
+        position: relative;
+    }
+</style>
+<script>
+
+    $(window).on('beforeunload', function () {
+        $(window).scrollTop(0);
+    });
+</script>
+</head>
+<body>
+
+
+<div id="row-1" class="row">
+    <div class="scrollIcon scrollElement" data-vertical="-0.1" style="left:-30%;top:10%;"><i
+            class="fa fa-tachometer"></i></div>
+
+    <div class="container">
+        <br>
+
+        <div class="jumbotron">
+            <h1>State of the Web</h1>
+
+            <h2><i class="fa fa-tachometer fa-3x"></i>&nbsp;&nbsp;MD Anderson Web Analytics Report</h2>
+
+            <p>Omniture analytics is currently installed on public-facing MD Anderson sites www.MDAnderson.org and
+                m.MDAnderson.org It is utilized
+                by the MD Anderson marketing team for marketing metrics.</p>
+
+            <p>The website analytics tools can give us a greater idea of what people are using our site for.</p>
+        </div>
+        <div class="col-lg-5">
+
+        </div>
+    </div>
+</div>
+
+
+<div id="row-2" class="row">
+    <div class="scrollIcon scrollElement" data-horizontal="0.005" style="left:-30%"><i class="fa fa-hand-o-up"></i></div>
+    <div class="container">
+        <div class="col-lg-4">
+
+            <div class="panel panel-primary">
+                <div class="panel-heading"><i class="fa fa-hand-o-up fa-3x"></i>
+
+                    <h3 class="panel-title">Our Mobile Audience is Growing Year-by-year</h3>
+                </div>
+                <div class="panel-body">
+                    <p>Each year, since we started recording our traffic with analytics tools, the percentage of website
+                        visitors using a mobile device has grown by 85%. the percentage of mobile phone only traffic has
+                        grown by 93%.</p>
+
+                    <p>Clearly, more and more users use their mobile devices for getting information from
+                        MDAnderson.org</p>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="col-lg-8 group">
+            <div class="row"><h1 class="label label-primary">Website Visitors by Device Type</h1></div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div id="mobileUsers2012" style="width: 100%; height: auto;"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div id="mobileUsers2013" style="width: 100%; height: auto;"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div id="mobileUsers2014" style="width: 100%; height: auto;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+</div>
+
+
+<div id="row-3" class="row">
+    <div class="scrollIcon scrollElement" data-horizontal="0.005" style="left:-30%"><i class="fa fa-clock-o"></i></div>
+    <div class="container">
+        <div class="col-lg-4  hidden-lg">
+
+            <div class="panel panel-warning">
+                <div class="panel-heading"><i class="fa fa-clock-o fa-3x"></i>
+
+                    <h3 class="panel-title">However, Visitors Spend Less Time at MDAnderson.org</h3>
+                </div>
+                <div class="panel-body">
+                    <p>Overall, visitors spend less time on MDAnderson.org</p>
+
+                    <p>However, the launch of the new mobile site, m.MDAnderson.org, changed the Bounce Rate for mobile
+                        users.</p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-lg-8 group">
+
+            <div class="row"><h1 class="label label-warning">Time Spent on MDAnderson.org by Device Type</h1></div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div id="timeSpentMobile" style="width: 100%; height: auto;"></div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div id="timeSpentTablet" style="width: 100%; height: auto;"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div id="timeSpentDesktop" style="width: 100%; height: auto;"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 hidden-md hidden-sm hidden-xs">
+
+            <div class="panel panel-warning">
+                <div class="panel-heading"><i class="fa fa-clock-o fa-3x"></i>
+
+                    <h3 class="panel-title">However, Visitors Spend Less Time at MDAnderson.org</h3>
+                </div>
+                <div class="panel-body">
+                    <p>Overall, visitors spend less time on MDAnderson.org</p>
+
+                    <p>However, the launch of the new mobile site, m.MDAnderson.org, changed the Bounce Rate for mobile
+                        users.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div id="row-4" class="row">
+    <div class="scrollIcon scrollElement" data-horizontal="-0.005" style="left:30%"><i class="fa fa-search"></i></div>
+
+    <div class="container">
+        <div class="jumbotron">
+            <h3><i class="fa fa-search fa-3x"></i>&nbsp;&nbsp;Why People Are visiting MD Anderson on their Mobile
+                Device?</h3>
+            <br><br>
+
+            <p>What can analytics tell us about our visitors' purpose of visiting MDAnderson.org?</p>
+        </div>
+
+
+    </div>
+
+</div>
+
+<div id="row-5" class="row">
+    <div class="scrollIcon scrollElement" data-horizontal="0.005" style="left:-30%"><i class="fa fa-meh-o"></i></div>
+    <div class="container">
+
+        <div class="col-lg-4">
+
+            <div class="panel panel-danger">
+                <div class="panel-heading"><i class="fa fa-meh-o fa-3x"></i>
+
+                    <h3 class="panel-title">How Many Visitors Leave the Home Page Shortly After Arriving?</h3>
+                </div>
+                <div class="panel-body">
+                    <p>Over 71% of our mobile visitors have left the site within minutes of arriving.</p>
+
+                    <p>Our team is making forward progress, notice how the new Mobile Site, m.MDAnderson.org caused the
+                        bounce rate to drop!</p>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="col-lg-8 group">
+            <div class="row"><h1 class="label label-danger">Site Exit Rate by Device Type</h1></div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div id="bounceRate" style="width: 100%; height: auto;"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div id="row-6" class="row">
+    <div class="scrollIcon scrollElement" data-horizontal="0.002" style="left:-30%"><i class="fa fa-lightbulb-o"></i>
+    </div>
+    <div class="container">
+
+        <div class="col-lg-4 hidden-lg">
+            <div class="panel panel-success">
+                <div class="panel-heading"><i class="fa fa-lightbulb-o fa-3x"></i>
+
+                    <h3 class="panel-title">What mobile visitors do at MDAnderson.org</h3>
+                </div>
+                <div class="panel-body">
+                    <p>Most mobile visitors that do not leave, use the site for research on a specific type of
+                        cancer.</p>
+
+                    <p>The next largest group of mobile users, need help finding one of our locations.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-8 group">
+            <div class="row"><h1 class="label label-success">What Mobile Visitors Do at MDAnderson.org When They
+                Stay</h1></div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div id="visitorActivitiesTotal" style="width: 100%; height: auto;"></div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div id="visitorActivities" style="width: 100%; height: auto;"></div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-lg-4 hidden-md hidden-sm hidden-xs">
+            <div class="panel panel-success">
+                <div class="panel-heading"><i class="fa fa-lightbulb-o fa-3x"></i>
+
+                    <h3 class="panel-title">What Mobile Visitors Do at MDAnderson.org</h3>
+                </div>
+                <div class="panel-body">
+                    <p>Most mobile visitors that do not leave, use the site for research on a specific type of
+                        cancer.</p>
+
+                    <p>The next largest group of mobile users, want help finding one of our locations.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div id="row-7" class="row">
+    <div class="scrollIcon scrollElement" data-horizontal="0.003" style="left:-30%;"><i class="fa fa-stethoscope"></i>
+    </div>
+    <div class="container">
+        <div class="jumbotron">
+            <div class="quote">
+                <div class="img-wrap">
+                    <img src="http://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Socrates_Louvre.jpg/220px-Socrates_Louvre.jpg">
+                </div>
+
+                <p><i class="fa fa-quote-left"></i>The unexamined life is not worth living.<i
+                        class="fa fa-quote-right"></i></p>
+            </div>
+            <p style="clear:both"></p>
+        </div>
+        <div class="jumbotron">
+            <p>
+                <i class="fa fa-stethoscope fa-3x"></i>
+                Omniture helps the marketing team collect and digest insights into audience behavior. They can look at
+                user trends, see what works, what does not work, if their fixes are effective, quantify and justify
+                their efforts.
+            </p>
+
+            <p>
+                As a development team, we must collect and use the same data on our audience patterns and uses of our
+                web applications. Analytics reports help us identify a failure point before our clients experience an
+                error. This is a powerful tool to use to lead the Patient Digital Experience.
+            </p>
+        </div>
+    </div>
+</div>
+<div class="scrollMe scrollElement" data-vertical="0.05"><i class="fa fa-arrows-v fa-5x"></i></div>
+<script>
+
+    var lastPos = 0;
+    var direction = 0;
+    var $window = $(window);
+    var height = $window.height();
+    var width = $window.width();
+
+    $(document).ready(function () {
+        $('body > .row').each(function () {
+            $(this).css('min-height', height)
+        });
+    });
+
+    function updateElement() {
+        var pos = Math.round($window.scrollTop());
+        var pos2 = window.pageYOffset;
+        console.log(pos)
+        console.log(pos2)
+        if(pos>0){
+            pos>lastPos?direction=1:direction=-1;
+            console.log(direction)
+            $('.scrollElement').each(function (index) {
+                if (!$(this).attr('id'))
+                    $(this).attr('id', index);
+                var elementPos = $(this).position();
+                if ((Math.round(elementPos.top)) < pos + height) {
+                    var elementVertPos;
+                    var elementHorzPos;
+                    var oldtop = $(this).css('left');
+                    var oldbottom = $(this).css('bottom');
+                    var oldleft = $(this).css('top');
+                    var oldright = $(this).css('right');
+                    $(this).attr("data-0t", oldtop);
+                    $(this).attr("data-0b", oldbottom);
+                    $(this).attr("data-0l", oldleft);
+                    $(this).attr("data-0r", oldright);
+                    $(this).parent().addClass('active');
+                    $(this).data('vertical') ? elementVertPos = elementPos.top+(pos * (direction*$(this).data('vertical'))):elementVertPos = elementPos.top;
+                    $(this).data('horizontal') ? elementHorzPos = elementPos.left+(pos * (direction*$(this).data('horizontal'))):elementHorzPos = elementPos.left;
+                    //$(this).data('vertical') ? elementVertPos = ($(this).data('vertical') * pos * direction) + elementPos.top : elementVertPos = elementPos.top;
+                    //$(this).data('horizontal') ? elementHorzPos = ($(this).data('horizontal') * pos * direction) + elementPos.left : elementHorzPos = elementPos.left;
+                    $(this).css({top: elementVertPos, left: elementHorzPos});
+                }
+            });
+        } else {
+
+        }
+        lastPos = pos;
+    }
+    ;
+
+    $window.bind('scroll', updateElement);
+</script>
+</body>
+</html>
