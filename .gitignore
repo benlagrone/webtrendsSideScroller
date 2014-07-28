@@ -4,3 +4,10 @@
 .idea/encodings.xml
 
 .idea/jsLibraryMappings.xml
+
+*.xml
+
+*.iml
+
+node_modules/*
+
