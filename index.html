@@ -29,6 +29,7 @@
     <div id="p0" class="row page">
         <p>foo</p>
     </div>
+    <div class="row page"></div>
     <div id="p1" class="row page"></div>
     <div id="p2" class="row page"></div>
     <div id="p3" class="row page"></div>
@@ -57,8 +58,13 @@
             $(this).css('min-height', height-30)
         });
     });
-    $('page').each(function(){
-
+    $('.page').each(function(index){
+        var elementIndex;
+        if(!this.id)
+        this.id='element'+index;
+        console.log(this.id)
+        elementIndex = $(this).id;
+        $('.page').text($(this).height());
     });
     function updateElement() {
         var pos = Math.round($window.scrollTop());
