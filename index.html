@@ -10,7 +10,6 @@
     <style>
         .page{
             display:block;
-            min-height:100%;
             margin:1%;
             border:1px solid #ccc;
         }
@@ -55,16 +54,20 @@
 
     $(document).ready(function () {
         $('.page').each(function () {
-            $(this).css('min-height', height-30)
+            $(this).css('height', height-30)
         });
-    });
-    $('.page').each(function(index){
-        var elementIndex;
-        if(!this.id)
-        this.id='element'+index;
-        console.log(this.id)
-        elementIndex = $(this).id;
-        $('.page').text($(this).height());
+
+        $('.page').each(function(index){
+            var elementIndex;
+            if(!this.id)
+                this.id='element'+index;
+            console.log(this.id)
+            elementIndex = $(this).id;
+            var element = document.getElementById(this.id)
+            var elementHeight = window.getComputedStyle(element,null).getPropertyValue('height');
+            console.log(elementHeight)
+            $('.page').text(elementHeight);
+        });
     });
     function updateElement() {
         var pos = Math.round($window.scrollTop());
