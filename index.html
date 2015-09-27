@@ -10,14 +10,6 @@
         body{padding:0;margin:0;background-color:black;}
         .page{
         }
-        .hangar{
-            position:fixed;
-            top:0;
-            background-color:#f0f0f0;
-            height:35px;
-            width:100%;
-            opacity:0.7;
-        }
         .black{background-color: black;}
         .color-0 { background-color: #3499DB }	/* Main Primary color */
         .color-1 { background-color: #85C4ED }
@@ -30,6 +22,10 @@
         #sun{}
         #sun > span > i:first-child{position:relative;top:0px;left:24px}
         #sun > span > i:last-child{position:relative;bottom:42px;left:23px;}
+        #sky{
+            margin:0 -1EM;
+            overflow:hidden;
+        }
         #ground{
             width: 100%;
             border-bottom:60px solid brown;
@@ -112,12 +108,11 @@
 
     </style>
 </head>
-<body id="body" onscroll="updateElement()">
-<div id="hangar" class="hangar"></div>
+<body id="body">
 <div class="container" class="black">
     <section id="space">
         <div id="p0" class="row page black">
-            <i class="fa fa-moon-o yellow"></i>
+            <i class="fa fa-moon-o yellow fa-5x"></i>
             <div id="stars">
                 <i class="fa fa-star yellow"></i>
                 <i class="fa fa-star yellow"></i>
@@ -331,7 +326,11 @@
                 <i class="fa fa-cloud fa-4x white mover" data-move="right" data-vel="1"></i>
                 <i class="fa fa-cloud fa-5x white mover" data-move="right" data-vel="1"></i>
             </div>
-            <i class="fa fa-plane"></i>
+            <i class="fa fa-plane fa-5x"
+               style="-ms-transform: rotate(7deg);
+                  -webkit-transform: rotate(7deg);
+                  transform: rotate(30deg);"
+                    ></i>
         </div>
         <div id="p13" class="row page color-1">
             <div class="clouds">
@@ -429,105 +428,132 @@
 </div>
 
 <script>
-    var height = window.innerHeight;
-    var width = window.innerWidth;
-    var hangarElement = document.getElementById("hangar");
-    var divs = document.getElementsByClassName("row");
-    var rocketElement = document.getElementById("rocket");
-    var horzRocketPos = width*0.5;
-    var rocketYDelta = 40;
-    var rocketXDelta = 50;
+
     var scrolls = 0;
 
-    var rocketPositionHolder = rocketElement.getBoundingClientRect().bottom;
-
-    var earthChildren = document.getElementById("earth").getElementsByTagName("i");
-
     document.getElementById("body").onload = function(){
-        for (i = 0;i<divs.length;i++){
-            divs[i].style.height = height + "px";
-            var element = document.getElementById(divs[i].id)
+
+        for (i = 0;i<document.getElementsByClassName("row").length;i++){
+            document.getElementsByClassName("row")[i].style.height = window.innerHeight + "px";
+            var element = document.getElementById(document.getElementsByClassName("row")[i].id)
             var elementHeight = window.getComputedStyle(element,null).getPropertyValue('height');
         };
+
         var stars = document.getElementById("stars").getElementsByTagName("i");
         for (var i=0; i < stars.length; i++){
             stars[i].style.position = "fixed";
             stars[i].style.top = Math.floor((Math.random() * 150) + 1) + "%";
             stars[i].style.left = Math.floor((Math.random() * 100) + 1) + "%";
         };
-        var movers = document.getElementsByClassName("mover");
-        for (var i = 0;i < movers.length; i++){
-            //var cloudgroup = movers[i].getElementsByTagName("i");
-            var moverData = {};
-            movers[i].moverData = moverData;
-        }
+
         var cloudGroups = document.getElementsByClassName("clouds")
         for (var i = 0; i < cloudGroups.length; i++){
             var clouds = cloudGroups[i].getElementsByTagName("i");
             for (var j = 0; j < clouds.length; j++){
                 clouds[j].style.position = "relative";
                 clouds[j].style.top = Math.floor((Math.random() * window.innerHeight *.75) + 1) + "px";
-                clouds[j].setAttribute("data-position0", Math.floor((Math.random() * width) + 1)) +"px";
-                clouds[j].style.left = Math.floor((Math.random() * width *.75) + 1)+'px';
-                //console.log(clouds[j].style.left)
-                //console.log(width)
-                //console.log((Math.floor((Math.random() * width) + 1))+"px");
+                clouds[j].style.left = (Math.floor((Math.random() * window.innerWidth *.75) + 1)-(window.innerWidth/2))+'px';
             }
         }
-        //window.scrollTo(0,0);
-        smoothScrollTo(document.body.scrollHeight)
-        //rocketElement.style.left = width*0.5 + "px";
+        smoothScrollTo(document.body.scrollHeight);
+        document.getElementsByTagName("body")[0].setAttribute("onscroll","updateElement()")
     };
-    function updateElement() {
-        var rocketPosition = rocketElement.getBoundingClientRect();
-        var rocketDirection;
-        rocketPositionHolder>rocketElement.getBoundingClientRect().bottom?rocketDirection=-1:rocketDirection=1;
-        rocketDirection==1?scrolls+=1:rocketDirection==-1?scrolls+=(1*-1):scrolls=scrolls;
-        rocketPositionHolder = rocketElement.getBoundingClientRect().bottom;
-        var pane = Math.round(((height*(divs.length) - rocketElement.getBoundingClientRect().bottom)/height) + 1.4)
 
-        for (var i = 0; i<divs.length;i++){
-            if(Math.abs(divs[i].getBoundingClientRect().bottom)<height&&Math.abs(divs[i].getBoundingClientRect().top)<height){
-                //console.log("I am in " + i)
-                var cloudGroup = divs[i].getElementsByTagName("i")
-                for (j=0;j<cloudGroup.length;j++){
-                    //console.log(j)
-                    var cloudClasses = cloudGroup[j].classList;
-                    for (var k=0;k<cloudGroup[j].classList.length;k++){
-                        //console.log(cloudGroup[j].classList[k])
-                        switch (cloudGroup[j].classList[k]){
-                            case 'fa-1x':
-                                //console.log('fa-1x');
-                                 //console.log(cloudGroup[j])
-                                //cloudGroup[j].style.left = (cloudGroup[j].getBoundingClientRect().left + 1/(100*cloudGroup.length*rocketDirection*width*(height*(divs.length)))) +"px";
+    function updateElement() {
+        var rocketDirection;
+        document.getElementById("rocket").getBoundingClientRect().bottomr>document.getElementById("rocket").getBoundingClientRect().bottom?rocketDirection=-1:rocketDirection=1;
+        rocketDirection==1?scrolls+=1:rocketDirection==-1?scrolls+=(1*-1):scrolls=scrolls;
+
+        getMovingElements(document.getElementsByClassName("row"),[cloudCallBack,planeCallBack,starCallBack,moonCallBack]);
+        moveEarth(document.getElementById("earth"));
+        moveRocket(document.getElementById("rocket"))
+
+        for (var i =0; i < document.getElementById("stars").getElementsByTagName("i").length; i++){
+            document.getElementById("stars").getElementsByTagName("i")[i].style.opacity = (1-(window.pageYOffset/(window.innerHeight*(document.getElementsByClassName("row").length))) -.3);
+        };
+    }
+
+    function moveRocket(rocket){
+        rocket.getElementsByTagName("span")[0].style.transform = "rotate(" + (355 - (((window.innerHeight*(document.getElementsByClassName("row").length) - document.getElementById("rocket").getBoundingClientRect().bottom)/window.innerHeight))*3) + "deg)";
+        rocket.getElementsByTagName("i")[2].style.transform = "rotate(" + (259 - (((window.innerHeight*(document.getElementsByClassName("row").length) - document.getElementById("rocket").getBoundingClientRect().bottom)/window.innerHeight))*3) + "deg)";
+        rocket.getElementsByTagName("span")[0].style.bottom = 65 * (document.getElementById("rocket").getBoundingClientRect().bottom)/(window.innerHeight*(document.getElementsByClassName("row").length)) + '%';
+    }
+
+    function moveEarth(earth){
+        earth.style.fontSize=(((window.innerHeight*(document.getElementsByClassName("row").length) - document.getElementById("rocket").getBoundingClientRect().bottom)/window.innerHeight) *100)+"vw";
+        earth.style.left=(((window.innerHeight*(document.getElementsByClassName("row").length) - document.getElementById("rocket").getBoundingClientRect().bottom)/window.innerHeight) + 1.4*20)+"px";
+        earth.style.height = (window.innerHeight*(document.getElementsByClassName("row").length)-window.pageYOffset)/window.innerHeight+.5 + '%';
+        earth.getElementsByTagName("i")[0].style.transform = "rotate(" + (15 + (((window.innerHeight*(document.getElementsByClassName("row").length) - document.getElementById("rocket").getBoundingClientRect().bottom)/window.innerHeight))*4) + "deg)";
+        earth.getElementsByTagName("i")[0].style.right = (window.pageYOffset/window.innerHeight*45) + '%';
+        earth.getElementsByTagName("i")[0].style.bottom = (window.pageYOffset/window.innerHeight*200) + '%';
+        earth.getElementsByTagName("i")[0].style.opacity = (1-(window.pageYOffset/(window.innerHeight*(document.getElementsByClassName("row").length))) +.3);
+    }
+
+    function cloudCallBack(clouds){
+        for (var k=0;k<clouds.classList.length;k++){
+            switch (clouds.classList[k]){
+                case 'fa-1x':
+                    clouds.style.left = setElementLeftPosition(clouds,1);
+                    break;
+                case 'fa-2x':
+                    clouds.style.left = setElementLeftPosition(clouds,1);
+                    break;
+                case 'fa-3x':
+                    clouds.style.left = setElementLeftPosition(clouds,2);
+                    break;
+                case 'fa-4x':
+                    clouds.style.left = setElementLeftPosition(clouds,3);
+                    break;
+                case 'fa-5x':
+                    clouds.style.left = setElementLeftPosition(clouds,4);
+                    break;
+                default:
+                    ;
+            }
+            var leftValue = 0;
+        }
+
+    }
+
+    function planeCallBack(planes){
+        planes.style.position = "relative";
+        planes.style.left = setElementLeftPosition(planes,3);
+    }
+
+    function starCallBack(stars){
+
+    }
+
+    function moonCallBack(moons){
+        moons.style.position = "relative";
+        moons.style.left = setElementLeftPosition(moons,6);
+    }
+
+    function setElementLeftPosition(element,increment){
+            if(isNaN(parseInt(element.style.left.split("p")[0]))){
+                return ((element.getBoundingClientRect().left)+increment)+"px"
+            } else {
+                return ((Math.abs(parseInt(element.style.left.split("p")[0]))) + increment)+"px";
+            }
+    }
+
+    function getMovingElements(row, callback){
+        for(var i = 0;i<row.length;i++){
+            if((window.pageYOffset + (window.innerHeight))>row[i].offsetTop && (window.pageYOffset)<(row[i].offsetTop+(window.innerHeight/2*3))){
+                for(j=0;j<row[i].getElementsByTagName("i").length;j++){
+                    for(k=0;k<row[i].getElementsByTagName("i")[j].classList.length;k++){
+                        switch(row[i].getElementsByTagName("i")[j].classList[k]){
+                            case 'fa-cloud':
+                                callback[0](row[i].getElementsByTagName("i")[j]);
                                 break;
-                            case 'fa-2x':
-                                    console.log(cloudGroup[j].style.left)
-                                    //console.log(width)
-                                console.log(cloudGroup[j].style.left.split("p")[0]/width)
-                                    //console.log(width-cloudGroup[j].style.left.split("p")[0])
-                                //console.log(cloudGroup[j].getBoundingClientRect().left+2)
-                                    //console.log((cloudGroup[j].getBoundingClientRect().left) + (2/(100*cloudGroup.length*rocketDirection/width*(height*(divs.length)))))
-                                //cloudGroup[j].style.left = (cloudGroup[j].getBoundingClientRect().left) + (2/(100*cloudGroup.length*rocketDirection/width*(height*(divs.length)))) +"px";
+                            case 'fa-plane':
+                                callback[1](row[i].getElementsByTagName("i")[j]);
                                 break;
-                            case 'fa-3x':
-                                console.log(cloudGroup[j].style.left)
-                                console.log(cloudGroup[j].style.left.split("p")[0]/width)
-                                //clouds[j].style.left = (cloudGroup[j].getBoundingClientRect().left + 3/(100*cloudGroup.length*rocketDirection/width*(height*(divs.length)))) +"px";
+                            case 'fa-star':
+                                callback[2](row[i].getElementsByTagName("i")[j]);
                                 break;
-                            case 'fa-4x':
-                                console.log(cloudGroup[j].style.left)
-                                console.log(cloudGroup[j].style.left.split("p")[0]/width)
-                                //clouds[j].style.left = (cloudGroup[j].getBoundingClientRect().left + 4/(100*cloudGroup.length*rocketDirection/width*(height*(divs.length)))) +"px";
-                                break;
-                            case 'fa-5x':
-                                console.log(cloudGroup[j].style.left)
-                                console.log(cloudGroup[j].style.left.split("p")[0]/width)
-                                //cloudGroup[j].style.left = (cloudGroup[j].getBoundingClientRect().left + 5/(100*cloudGroup.length*rocketDirection/width*(height*(divs.length)))) +"px";
-                                //console.log(cloudGroup[j].getBoundingClientRect().left)
-                                //console.log(1.5/cloudGroup.length*rocketDirection)
-                                //console.log(cloudGroup[j].getBoundingClientRect().left + 1.5/cloudGroup.length*rocketDirection/100)
-                                //console.log(cloudGroup[j].style.left)
+                            case 'fa-moon-o':
+                                callback[3](row[i].getElementsByTagName("i")[j]);
                                 break;
                             default:
                                 ;
@@ -536,32 +562,9 @@
                 }
             }
         }
-        hangarElement.innerHTML = 'total: ' + height*(divs.length) + ', fromTop:'+ window.pageYOffset + ' topToBottom'+(window.pageYOffset + height) +', height:' + height + ', width:' + width +
-                ', count: '+ divs.length + ', rocketPos: ' + rocketElement.getBoundingClientRect().bottom + ', pane: '+pane + " mult: " + window.pageYOffset/height +
-        ' scrolls: ' + scrolls + ' direction: ' + rocketDirection + ' percentToTop: ' + (rocketElement.getBoundingClientRect().bottom)/(height*(divs.length));
-
-        document.getElementById("earth").style.fontSize=(((height*(divs.length) - rocketPosition.bottom)/height) *100)+"vw";
-        document.getElementById("earth").style.left=(((height*(divs.length) - rocketPosition.bottom)/height) + 1.4*20)+"px";
-        document.getElementById("earth").style.height = (height*(divs.length)-window.pageYOffset)/height+.5 + '%';
-        document.getElementById("earth").getElementsByTagName("i")[0].style.transform = "rotate(" + (15 + (((height*(divs.length) - rocketPosition.bottom)/height))*4) + "deg)";
-        document.getElementById("earth").getElementsByTagName("i")[0].style.right = (window.pageYOffset/height*45) + '%';
-        document.getElementById("earth").getElementsByTagName("i")[0].style.bottom = (window.pageYOffset/height*200) + '%';
-        document.getElementById("earth").getElementsByTagName("i")[0].style.opacity = (1-(window.pageYOffset/(height*(divs.length))) +.3);
-        document.getElementById("rocket").getElementsByTagName("span")[0].style.transform = "rotate(" + (355 - (((height*(divs.length) - rocketPosition.bottom)/height))*3) + "deg)";
-        document.getElementById("rocket").getElementsByTagName("i")[2].style.transform = "rotate(" + (259 - (((height*(divs.length) - rocketPosition.bottom)/height))*3) + "deg)";
-        document.getElementById("rocket").getElementsByTagName("span")[0].style.bottom = 65 * (rocketElement.getBoundingClientRect().bottom)/(height*(divs.length)) + '%';
-
-        var stars = document.getElementById("stars").getElementsByTagName("i");
-        for (var i =0; i < stars.length; i++){
-            stars[i].style.opacity = (1-(window.pageYOffset/(height*(divs.length))) -.3);
-        };
-        var cloudGroups = document.getElementsByClassName("clouds")
-        for (var i = 0; i < cloudGroups.length; i++){
-            var clouds = cloudGroups[i].getElementsByTagName("i");
-            for (var j = 0; j < clouds.length; j++){
-            }
-        }
     }
+
+
 
     window.smoothScrollTo = (function () {
         var timer, start, factor;
@@ -589,6 +592,7 @@
             }
 
             timer = setInterval(step,10);
+
             return timer;
         };
     }());
