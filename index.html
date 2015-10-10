@@ -36,9 +36,9 @@
             bottom:87%;
             left:20%;
         }
-        #sun > span > i{font-size:14vw;}
-        #sun > span > :first-child{position:relative;top: 132px;left: 4px;font-size:13vw;}
-        #sun > span > :last-child{position:relative;bottom:135px;left:-10px;}
+        #sun > i{font-size:14vw;}
+        #sun > first-child{position:relative;top: 132px;left: 4px;font-size:13vw;}
+        #sun > last-child{position:relative;bottom:135px;left:-10px;}
 
         .fa-plane{
             -ms-transform: rotate(7deg);
@@ -167,6 +167,9 @@
     <section id="space">
         <div id="p0" class="row">
             <i class="fa fa-moon-o yellow fa-5x"></i>
+
+        </div>
+        <div id="p1" class="row">
             <div id="stars">
                 <i class="fa fa-star yellow"></i>
                 <i class="fa fa-star yellow"></i>
@@ -307,7 +310,6 @@
 
             </div>
         </div>
-        <div id="p1" class="row"></div>
     </section>
     <section id="stratosphere" class="wet-asphalt curve2">
         <div id="p2" class="row wet-asphalt curve"></div>
@@ -377,6 +379,10 @@
                 <i class="fa fa-cloud fa-5x white"></i>
             </div>
             <i class="fa fa-plane fa-5x"></i>
+            <i class="fa fa-twitter"></i>
+            <i class="fa fa-twitter"></i>
+            <i class="fa fa-twitter"></i>
+            <i class="fa fa-twitter"></i>
         </div>
         <div id="p13" class="row color-0">
             <div class="clouds">
@@ -397,11 +403,9 @@
     </section>
     <section id="objects">
         <div id="sun">
-            <span class="fa-stack fa-lg">
                 <i class="fa fa-smile-o green"></i>
                 <i class="fa fa-circle yellow"></i>
                 <i class="fa fa-sun-o yellow"></i>
-            </span>
         </div>
         <div id="earth">
             <i class="fa fa-globe blue land air"></i>
@@ -471,7 +475,7 @@
         document.getElementById("rocket").getBoundingClientRect().bottomr>document.getElementById("rocket").getBoundingClientRect().bottom?rocketDirection=-1:rocketDirection=1;
         rocketDirection==1?scrolls+=1:rocketDirection==-1?scrolls+=(1*-1):scrolls=scrolls;
 
-        getMovingElements(document.getElementsByClassName("row"),[cloudCallBack,planeCallBack,starCallBack,moonCallBack]);
+        getMovingElements(document.getElementsByClassName("row"),[cloudCallBack,planeCallBack,starCallBack,moonCallBack,twitterCallBack]);
         moveEarth(document.getElementById("earth"));
         moveRocket(document.getElementById("rocket"))
 
@@ -522,6 +526,11 @@
 
     }
 
+    function twitterCallBack(twitter){
+        twitter.style.position = "relative";
+        twitter.style.left = setElementLeftPosition(twitter,2);
+    }
+
     function planeCallBack(planes){
         planes.style.position = "relative";
         planes.style.left = setElementLeftPosition(planes,3);
@@ -561,6 +570,9 @@
                                 break;
                             case 'fa-moon-o':
                                 callback[3](row[i].getElementsByTagName("i")[j]);
+                                break;
+                            case 'fa-twitter':
+                                callback[4](row[i].getElementsByTagName("i")[j]);
                                 break;
                             default:
                                 ;
