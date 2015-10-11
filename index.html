@@ -3,6 +3,7 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="font-awesome-4.4.0/css/font-awesome.min.css">
 
     <style>
@@ -105,24 +106,20 @@
 
         #ground > .right > :first-child{
             color:#333;
-            left:-40px;
+            left:-20px;
             bottom:15px!important;
         }
         #ground > .right > i:nth-child(2){
             color:#666;
-            left:15px;
         }
         #ground > .right > i:nth-child(3){
             color:#555;
-            left:15px;
         }
         #ground > .right > i:nth-child(4){
             color:#222;
-            left:15px;
         }
         #ground > .right > i:nth-child(5){
-            color:brown;
-            left:0px;
+            color:#222222;
         }
         #ground .right .small{
             font-size:12vw;
@@ -136,21 +133,7 @@
         #ground > div > i{
             position:relative;
         }
-        #ground > div.left > i:first-child{
-            left:15px;
-        }
-        #ground > div.left > i:nth-child(2){
-            left:30px;
-        }
-        #ground > div.left > i:nth-child(3){
-            left:10px;
-        }
-        #ground > div.left > i:nth-child(4){
-            left:0px;
-        }
-        #ground > div.left > i:nth-child(5){
-            left:-30px;
-        }
+
         .fa-globe.land::after {
             position: absolute;
             content: '';
@@ -420,7 +403,7 @@
             </span>
         </div>
     </section>
-<section id="terra">
+    <section id="terra">
         <div id="ground">
             <div class="left green">
                 <i class="fa fa-tree"></i>
@@ -442,41 +425,36 @@
 
 <script>
 
-    var scrolls = 0;
-
     document.getElementById("body").onload = function(){
 
         for (i = 0;i<document.getElementsByClassName("row").length;i++){
             document.getElementsByClassName("row")[i].style.height = window.innerHeight + "px";
-            var element = document.getElementById(document.getElementsByClassName("row")[i].id)
-            var elementHeight = window.getComputedStyle(element,null).getPropertyValue('height');
-        };
+        }
 
-        var stars = document.getElementById("stars").getElementsByTagName("i");
-        for (var i=0; i < stars.length; i++){
-            stars[i].style.position = "fixed";
-            stars[i].style.top = Math.floor((Math.random() * 150) + 1) + "%";
-            stars[i].style.left = Math.floor((Math.random() * 100) + 1) + "%";
-        };
-
-        var cloudGroups = document.getElementsByClassName("clouds")
+        spreadObjects(document.getElementById("stars").getElementsByTagName("i"),150,100,1,1,"fixed","%");
+        spreadObjects(document.getElementById("ground").getElementsByClassName("fa-tree"),0,14,-(window.innerHeight/28),1,"relative","px");
+        spreadObjects(document.getElementById("ground").getElementsByClassName("right")[0].getElementsByClassName("small"),0,14,-(window.innerHeight/13),1,"relative","px");
+        spreadObjects(document.getElementById("ground").getElementsByClassName("right")[0].getElementsByClassName("large"),0,14,-(window.innerHeight/15),1,"relative","px");
+        var cloudGroups = document.getElementsByClassName("clouds");
         for (var i = 0; i < cloudGroups.length; i++){
-            var clouds = cloudGroups[i].getElementsByTagName("i");
-            for (var j = 0; j < clouds.length; j++){
-                clouds[j].style.position = "relative";
-                clouds[j].style.top = Math.floor((Math.random() * window.innerHeight *.75) + 1) + "px";
-                clouds[j].style.left = (Math.floor((Math.random() * window.innerWidth *.75) + 1)-(window.innerWidth/2))+'px';
-            }
+            spreadObjects(cloudGroups[i].getElementsByTagName("i"),window.innerHeight*.75,window.innerWidth*.75,1,1-(window.innerWidth/2),"relative","px");
         }
         smoothScrollTo(document.body.scrollHeight);
         document.getElementsByTagName("body")[0].setAttribute("onscroll","updateElement()")
     };
 
-    function updateElement() {
-        var rocketDirection;
-        document.getElementById("rocket").getBoundingClientRect().bottomr>document.getElementById("rocket").getBoundingClientRect().bottom?rocketDirection=-1:rocketDirection=1;
-        rocketDirection==1?scrolls+=1:rocketDirection==-1?scrolls+=(1*-1):scrolls=scrolls;
+    function spreadObjects(x,vm,hm,va,ha,p,e){
+        console.log(x)
+        console.log(hm)
+        for (var i=0;i< x.length;i++){
+            x[i].style.position = p;
+            x[i].style.top = Math.floor((Math.random()*vm)+va)+e;
+            x[i].style.left = Math.floor((Math.random()*hm)+ha)+e;
+            console.log()
+        }
+    }
 
+    function updateElement() {
         getMovingElements(document.getElementsByClassName("row"),[cloudCallBack,planeCallBack,starCallBack,moonCallBack,twitterCallBack]);
         moveEarth(document.getElementById("earth"));
         moveRocket(document.getElementById("rocket"))
