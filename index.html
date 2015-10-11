@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="font-awesome-4.4.0/css/font-awesome.min.css">
 
     <style>
-        section{margin:-1EM;}
+        body{padding:0;margin:0;}
         .black{background-color: black;}
         .color-0 { background-color: #85C4ED }	 /* Main Primary color */
         .color-1 { background-color: #58ADE3 }
@@ -15,6 +15,7 @@
         .color-4 { background-color: #0665A2 }
         .wet-asphalt{background-color:#34495e}
         .blue{color: #85C4ED }
+        .blue2{color: #ADD8E6 }
         .green{color:green}
         .white{color:white;}
         .yellow{color:yellow}
@@ -164,10 +165,13 @@
     </style>
 </head>
 <body id="body" class="black">
-<main class="container" class="black">
+<main class="container black">
     <section id="space">
         <div id="p0" class="row">
             <i class="fa fa-moon-o yellow fa-5x"></i>
+
+        </div>
+        <div id="p1" class="row">
             <div id="stars">
                 <i class="fa fa-star yellow"></i>
                 <i class="fa fa-star yellow"></i>
@@ -308,7 +312,6 @@
 
             </div>
         </div>
-        <div id="p1" class="row"></div>
     </section>
     <section id="stratosphere" class="wet-asphalt curve2">
         <div id="p2" class="row wet-asphalt curve"></div>
@@ -348,13 +351,13 @@
         </div>
         <div id="p11" class="row color-0">
             <div class="clouds">
-                <i class="fa fa-cloud fa-3x white"></i>
+                <i class="fa fa-cloud fa-3x blue2"></i>
                 <i class="fa fa-cloud fa-2x white"></i>
-                <i class="fa fa-cloud fa-5x white"></i>
+                <i class="fa fa-cloud fa-5x blue2"></i>
                 <i class="fa fa-cloud fa-2x white"></i>
-                <i class="fa fa-cloud fa-4x white"></i>
+                <i class="fa fa-cloud fa-4x blue2"></i>
                 <i class="fa fa-cloud fa-5x white"></i>
-                <i class="fa fa-cloud fa-3x white"></i>
+                <i class="fa fa-cloud fa-3x blue2"></i>
                 <i class="fa fa-cloud fa-2x white"></i>
                 <i class="fa fa-cloud fa-5x white"></i>
                 <i class="fa fa-cloud fa-2x white"></i>
@@ -379,19 +382,22 @@
             </div>
             <i class="fa fa-plane fa-5x"></i>
             <i class="fa fa-twitter"></i>
+            <i class="fa fa-twitter"></i>
+            <i class="fa fa-twitter"></i>
+            <i class="fa fa-twitter"></i>
         </div>
         <div id="p13" class="row color-0">
             <div class="clouds">
+                <i class="fa fa-cloud fa-3x blue2"></i>
+                <i class="fa fa-cloud fa-2x blue2"></i>
+                <i class="fa fa-cloud fa-5x blue2"></i>
+                <i class="fa fa-cloud fa-2x white"></i>
+                <i class="fa fa-cloud fa-4x blue2"></i>
+                <i class="fa fa-cloud fa-5x white"></i>
                 <i class="fa fa-cloud fa-3x white"></i>
-                <i class="fa fa-cloud fa-2x white"></i>
+                <i class="fa fa-cloud fa-2x blue2"></i>
                 <i class="fa fa-cloud fa-5x white"></i>
-                <i class="fa fa-cloud fa-2x white"></i>
-                <i class="fa fa-cloud fa-4x white"></i>
-                <i class="fa fa-cloud fa-5x white"></i>
-                <i class="fa fa-cloud fa-3x white"></i>
-                <i class="fa fa-cloud fa-2x white"></i>
-                <i class="fa fa-cloud fa-5x white"></i>
-                <i class="fa fa-cloud fa-2x white"></i>
+                <i class="fa fa-cloud fa-2x blue2"></i>
                 <i class="fa fa-cloud fa-4x white"></i>
                 <i class="fa fa-cloud fa-5x white"></i>
             </div>
@@ -399,11 +405,9 @@
     </section>
     <section id="objects">
         <div id="sun">
-
                 <i class="fa fa-smile-o green"></i>
                 <i class="fa fa-circle yellow"></i>
                 <i class="fa fa-sun-o yellow"></i>
-
         </div>
         <div id="earth">
             <i class="fa fa-globe blue land air"></i>
@@ -526,7 +530,7 @@
 
     function twitterCallBack(twitter){
         twitter.style.position = "relative";
-        twitter.style.left = setElementLeftPosition(twitter,1);
+        twitter.style.left = setElementLeftPosition(twitter,2);
     }
 
     function planeCallBack(planes){
