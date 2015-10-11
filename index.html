@@ -20,18 +20,17 @@
         .green{color:green}
         .white{color:white;}
         .yellow{color:yellow}
+        .grey-1{color:#222222}
+        .grey-2{color:#666}
+        .silver{color:silver}
+
         .left{float:left}
         .right{float:right}
         .curve{border-top-right-radius: 90% 40%;}
         .curve2{border-top-right-radius: 80% 10%;}
 
         #sky{
-            margin:0 -1EM;
             overflow:hidden;
-        }
-        #ground{
-            width: 100%;
-            border-bottom:60px solid brown;
         }
         #sun{
             position:fixed;
@@ -43,44 +42,55 @@
         #sun > :first-child{position:relative;left: 57px;font-size:13em;}
         #sun > :last-child{position:relative;left: -60px;top:2px;font-size:14em;}
 
-        .fa-plane{
-            -ms-transform: rotate(7deg);
-            -webkit-transform: rotate(7deg);
-            transform: rotate(30deg);"
-        }
         #rocket > span{
-            -ms-transform: rotate(7deg);
-            -webkit-transform: rotate(7deg);
+            -ms-transform: rotate(315deg);
+            -webkit-transform: rotate(315deg);
             transform: rotate(315deg);
             position: fixed;
-            bottom: 3.2%;
-            left: 39.8%
-        }
-        #rocket > span > i:first-child{
-        position: fixed;
-        bottom: 3%;
-        left: 40%;
-        color:#333;
+            left: 40%;
         }
         #rocket > span > i:first-child{
             position: fixed;
             bottom: 3%;
             left: 40%;
-            color:#333;
+            text-shadow: 1px 1px #666;
         }
         #rocket > span > i:nth-child(2) {
             position: fixed;
             bottom: 3.2%;
             left: 39.8%;
-            color: #f0f0f0;
-            text-shadow: 1px 1px #666;
+            background-color: #333;
+            -webkit-background-clip: text;
+            -moz-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: rgba(255,255,255,0.8) -1px 1px 3px;
         }
         .fa-fire {
             position: fixed;
             bottom: 12px;
             left: 12px;
-            color:orange;
+            text-shadow: 0 0 20px #fefcc9,
+            10px -10px 30px #feec85,
+            -20px -20px 40px #ffae34,
+            20px -30px 35px #ec760c,
+            -20px -40px 40px #cd4606,
+            0 -50px 65px #973716,
+            10px -70px 70px #451b0e;
         }
+        .fa-plane{
+            -ms-transform: rotate(30deg);
+            -webkit-transform: rotate(30deg);
+            transform: rotate(30deg);
+
+            background-color: #999;
+            -webkit-background-clip: text;
+            -moz-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: rgba(255,255,255,0.8) -1px 1px 3px;
+        }
+
         #earth{
             float:left;
             font-size: 1000vw;
@@ -95,45 +105,6 @@
             bottom: 423px;
             right: 350%;
         }
-        #ground .left i{
-            font-size:8vw;
-            bottom:30px;
-        }
-        #ground .right i {
-            bottom: 80px;
-            float:left;
-        }
-
-        #ground > .right > :first-child{
-            color:#333;
-            left:-20px;
-            bottom:15px!important;
-        }
-        #ground > .right > i:nth-child(2){
-            color:#666;
-        }
-        #ground > .right > i:nth-child(3){
-            color:#555;
-        }
-        #ground > .right > i:nth-child(4){
-            color:#222;
-        }
-        #ground > .right > i:nth-child(5){
-            color:#222222;
-        }
-        #ground .right .small{
-            font-size:12vw;
-            bottom: 72px;
-        }
-        #ground .right .large{
-            font-size:14vw;
-            bottom: 83px;
-        }
-        #ground > div{width:50%;height:0px;}
-        #ground > div > i{
-            position:relative;
-        }
-
         .fa-globe.land::after {
             position: absolute;
             content: '';
@@ -145,13 +116,37 @@
             height: 80%;
             border-radius:50%;
         }
+
+        #ground{
+            width: 100%;
+            border-bottom:60px solid brown;
+        }
+        #ground > div{width:50%;height:0px;}
+        #ground .left i{
+            font-size:8vw;
+            bottom:30px;
+        }
+        #ground .right i {
+            float:left;
+        }
+        #ground > .right > :first-child{
+            left:-20px;
+            bottom:15px;
+        }
+        #ground .right .small{
+            font-size:12vw;
+        }
+        #ground .right .large{
+            font-size:14vw;
+        }
+
     </style>
 </head>
 <body id="body" class="black">
 <main class="container black">
     <section id="space">
         <div id="p0" class="row">
-            <i class="fa fa-moon-o yellow fa-5x"></i>
+            <i class="fa fa-moon-o fa-5x yellow"></i>
 
         </div>
         <div id="p1" class="row">
@@ -363,11 +358,11 @@
                 <i class="fa fa-cloud fa-4x white"></i>
                 <i class="fa fa-cloud fa-5x white"></i>
             </div>
-            <i class="fa fa-plane fa-5x"></i>
-            <i class="fa fa-twitter"></i>
-            <i class="fa fa-twitter"></i>
-            <i class="fa fa-twitter"></i>
-            <i class="fa fa-twitter"></i>
+            <i class="fa fa-plane fa-5x silver"></i>
+            <i class="fa fa-twitter red"></i>
+            <i class="fa fa-twitter green"></i>
+            <i class="fa fa-twitter yellow"></i>
+            <i class="fa fa-twitter silver"></i>
         </div>
         <div id="p13" class="row color-0">
             <div class="clouds">
@@ -397,9 +392,9 @@
         </div>
         <div id="rocket">
             <span>
-                <i class="fa fa-rocket fa-5x"></i>
-                <i class="fa fa-rocket fa-5x"></i>
-                <i class="fa fa-fire"></i>
+                <i class="fa fa-rocket fa-5x grey-2"></i>
+                <i class="fa fa-rocket fa-5x silver"></i>
+                <i class="fa fa-fire yellow"></i>
             </span>
         </div>
     </section>
@@ -413,11 +408,11 @@
                 <i class="fa fa-tree"></i>
             </div>
             <div class="right">
-                <i class="fa fa-truck"></i>
-                <i class="fa fa-building small"></i>
-                <i class="fa fa-building small"></i>
-                <i class="fa fa-building large"></i>
-                <i class="fa fa-industry large"></i>
+                <i class="fa fa-truck silver"></i>
+                <i class="fa fa-building small grey-1"></i>
+                <i class="fa fa-building small grey-2"></i>
+                <i class="fa fa-building large grey-2"></i>
+                <i class="fa fa-industry large grey-1"></i>
             </div>
         </div>
     </section>
@@ -426,11 +421,9 @@
 <script>
 
     document.getElementById("body").onload = function(){
-
         for (i = 0;i<document.getElementsByClassName("row").length;i++){
             document.getElementsByClassName("row")[i].style.height = window.innerHeight + "px";
         }
-
         spreadObjects(document.getElementById("stars").getElementsByTagName("i"),150,100,1,1,"fixed","%");
         spreadObjects(document.getElementById("ground").getElementsByClassName("fa-tree"),0,14,-(window.innerHeight/28),1,"relative","px");
         spreadObjects(document.getElementById("ground").getElementsByClassName("right")[0].getElementsByClassName("small"),0,14,-(window.innerHeight/13),1,"relative","px");
