@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="font-awesome-4.4.0/css/font-awesome.min.css">
 
     <style>
-        body{padding:0;margin:0;}
+        section{margin:-1EM;}
         .black{background-color: black;}
         .color-0 { background-color: #85C4ED }	 /* Main Primary color */
         .color-1 { background-color: #58ADE3 }
@@ -33,12 +33,13 @@
         }
         #sun{
             position:fixed;
-            bottom:87%;
-            left:20%;
+            top:100px;
+            left:100px;
+            font-size:5px;
         }
-        #sun > span > i{font-size:14vw;}
-        #sun > span > :first-child{position:relative;top: 132px;left: 4px;font-size:13vw;}
-        #sun > span > :last-child{position:relative;bottom:135px;left:-10px;}
+        #sun > i{font-size:12em;}
+        #sun > :first-child{position:relative;left: 57px;font-size:13em;}
+        #sun > :last-child{position:relative;left: -60px;top:2px;font-size:14em;}
 
         .fa-plane{
             -ms-transform: rotate(7deg);
@@ -377,6 +378,7 @@
                 <i class="fa fa-cloud fa-5x white"></i>
             </div>
             <i class="fa fa-plane fa-5x"></i>
+            <i class="fa fa-twitter"></i>
         </div>
         <div id="p13" class="row color-0">
             <div class="clouds">
@@ -397,11 +399,11 @@
     </section>
     <section id="objects">
         <div id="sun">
-            <span class="fa-stack fa-lg">
+
                 <i class="fa fa-smile-o green"></i>
                 <i class="fa fa-circle yellow"></i>
                 <i class="fa fa-sun-o yellow"></i>
-            </span>
+
         </div>
         <div id="earth">
             <i class="fa fa-globe blue land air"></i>
@@ -471,7 +473,7 @@
         document.getElementById("rocket").getBoundingClientRect().bottomr>document.getElementById("rocket").getBoundingClientRect().bottom?rocketDirection=-1:rocketDirection=1;
         rocketDirection==1?scrolls+=1:rocketDirection==-1?scrolls+=(1*-1):scrolls=scrolls;
 
-        getMovingElements(document.getElementsByClassName("row"),[cloudCallBack,planeCallBack,starCallBack,moonCallBack]);
+        getMovingElements(document.getElementsByClassName("row"),[cloudCallBack,planeCallBack,starCallBack,moonCallBack,twitterCallBack]);
         moveEarth(document.getElementById("earth"));
         moveRocket(document.getElementById("rocket"))
 
@@ -522,6 +524,11 @@
 
     }
 
+    function twitterCallBack(twitter){
+        twitter.style.position = "relative";
+        twitter.style.left = setElementLeftPosition(twitter,1);
+    }
+
     function planeCallBack(planes){
         planes.style.position = "relative";
         planes.style.left = setElementLeftPosition(planes,3);
@@ -561,6 +568,9 @@
                                 break;
                             case 'fa-moon-o':
                                 callback[3](row[i].getElementsByTagName("i")[j]);
+                                break;
+                            case 'fa-twitter':
+                                callback[4](row[i].getElementsByTagName("i")[j]);
                                 break;
                             default:
                                 ;
