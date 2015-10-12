@@ -90,7 +90,6 @@
             color: transparent;
             text-shadow: rgba(255,255,255,0.8) -1px 1px 3px;
         }
-
         #earth{
             float:left;
             font-size: 1000vw;
@@ -419,7 +418,6 @@
 </main>
 
 <script>
-
     document.getElementById("body").onload = function(){
         for (i = 0;i<document.getElementsByClassName("row").length;i++){
             document.getElementsByClassName("row")[i].style.height = window.innerHeight + "px";
@@ -448,6 +446,7 @@
     }
 
     function updateElement() {
+        //rewrite this whole callback function
         getMovingElements(document.getElementsByClassName("row"),[cloudCallBack,planeCallBack,starCallBack,moonCallBack,twitterCallBack]);
         moveEarth(document.getElementById("earth"));
         moveRocket(document.getElementById("rocket"))
