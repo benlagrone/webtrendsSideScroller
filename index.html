@@ -425,34 +425,31 @@
         spreadObjects(document.getElementById("ground").getElementsByClassName("fa-tree"),0,14,-(window.innerHeight/28),1,"relative","px");
         spreadObjects(document.getElementById("ground").getElementsByClassName("right")[0].getElementsByClassName("small"),0,14,-(window.innerHeight/13),1,"relative","px");
         spreadObjects(document.getElementById("ground").getElementsByClassName("right")[0].getElementsByClassName("large"),0,14,-(window.innerHeight/15),1,"relative","px");
-        var cloudGroups = document.getElementsByClassName("clouds");
-        for (var i = 0; i < cloudGroups.length; i++){
-            spreadObjects(cloudGroups[i].getElementsByTagName("i"),window.innerHeight*.75,window.innerWidth*.75,1,1-(window.innerWidth/2),"relative","px");
+        for (var i = 0; i < document.getElementsByClassName("clouds").length; i++){
+            spreadObjects(document.getElementsByClassName("clouds")[i].getElementsByTagName("i"),window.innerHeight*.75,window.innerWidth*.75,1,1-(window.innerWidth/2),"relative","px");
         }
         smoothScrollTo(document.body.scrollHeight);
         document.getElementsByTagName("body")[0].setAttribute("onscroll","updateElement()")
     };
 
     function spreadObjects(x,vm,hm,va,ha,p,e){
-        console.log(x)
-        console.log(hm)
-        for (var i=0;i< x.length;i++){
+        for (var i=0;i<x.length;i++){
             x[i].style.position = p;
             x[i].style.top = Math.floor((Math.random()*vm)+va)+e;
             x[i].style.left = Math.floor((Math.random()*hm)+ha)+e;
-            console.log()
         }
     }
 
     function updateElement() {
-        //rewrite this whole callback function
-        getMovingElements(document.getElementsByClassName("row"),[cloudCallBack,planeCallBack,starCallBack,moonCallBack,twitterCallBack]);
+        getMovingElements(document.getElementsByClassName("row"),function (theObject,increment){
+            theObject.style.position = "relative";
+            theObject.style.left = setElementLeftPosition(theObject,increment);
+        });
         moveEarth(document.getElementById("earth"));
-        moveRocket(document.getElementById("rocket"))
-
+        moveRocket(document.getElementById("rocket"));
         for (var i =0; i < document.getElementById("stars").getElementsByTagName("i").length; i++){
             document.getElementById("stars").getElementsByTagName("i")[i].style.opacity = (1-(window.pageYOffset/(window.innerHeight*(document.getElementsByClassName("row").length))) -.3);
-        };
+        }
     }
 
     function moveRocket(rocket){
@@ -490,30 +487,11 @@
                     clouds.style.left = setElementLeftPosition(clouds,4);
                     break;
                 default:
+                        //do something?
                     ;
             }
             var leftValue = 0;
         }
-
-    }
-
-    function twitterCallBack(twitter){
-        twitter.style.position = "relative";
-        twitter.style.left = setElementLeftPosition(twitter,2);
-    }
-
-    function planeCallBack(planes){
-        planes.style.position = "relative";
-        planes.style.left = setElementLeftPosition(planes,3);
-    }
-
-    function starCallBack(stars){
-
-    }
-
-    function moonCallBack(moons){
-        moons.style.position = "relative";
-        moons.style.left = setElementLeftPosition(moons,6);
     }
 
     function setElementLeftPosition(element,increment){
@@ -524,26 +502,23 @@
             }
     }
 
-    function getMovingElements(row, callback){
+    function getMovingElements(row,callback){
         for(var i = 0;i<row.length;i++){
             if((window.pageYOffset + (window.innerHeight))>row[i].offsetTop && (window.pageYOffset)<(row[i].offsetTop+(window.innerHeight/2*3))){
                 for(j=0;j<row[i].getElementsByTagName("i").length;j++){
                     for(k=0;k<row[i].getElementsByTagName("i")[j].classList.length;k++){
                         switch(row[i].getElementsByTagName("i")[j].classList[k]){
                             case 'fa-cloud':
-                                callback[0](row[i].getElementsByTagName("i")[j]);
+                                cloudCallBack(row[i].getElementsByTagName("i")[j]);
                                 break;
                             case 'fa-plane':
-                                callback[1](row[i].getElementsByTagName("i")[j]);
-                                break;
-                            case 'fa-star':
-                                callback[2](row[i].getElementsByTagName("i")[j]);
+                                callback(row[i].getElementsByTagName("i")[j],3);
                                 break;
                             case 'fa-moon-o':
-                                callback[3](row[i].getElementsByTagName("i")[j]);
+                                callback(row[i].getElementsByTagName("i")[j],6);
                                 break;
                             case 'fa-twitter':
-                                callback[4](row[i].getElementsByTagName("i")[j]);
+                                callback(row[i].getElementsByTagName("i")[j],2)
                                 break;
                             default:
                                 ;
@@ -553,7 +528,6 @@
             }
         }
     }
-
 
 
     window.smoothScrollTo = (function () {

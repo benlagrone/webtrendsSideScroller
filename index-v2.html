@@ -134,7 +134,7 @@
         }
     </style>
 </head>
-<body>
+<body id="body">
     <main class="black">
         <section id="space">
             <div id="p0" class="row">
@@ -408,5 +408,83 @@
             </div>
         </section>
     </main>
+    <script>
+        document.getElementById("body").onload = function() {
+            for (i = 0; i < document.getElementsByClassName("row").length; i++) {
+                document.getElementsByClassName("row")[i].style.height = window.innerHeight + "px";
+            }
+            spreadObjects(document.getElementById("stars").getElementsByTagName("i"),150,100,1,1,"fixed","%");
+            spreadObjects(document.getElementById("ground").getElementsByClassName("fa-tree"),0,14,-(window.innerHeight/28),1,"relative","px");
+            spreadObjects(document.getElementById("ground").getElementsByClassName("right")[0].getElementsByClassName("small"),0,14,-(window.innerHeight/13),1,"relative","px");
+            spreadObjects(document.getElementById("ground").getElementsByClassName("right")[0].getElementsByClassName("large"),0,14,-(window.innerHeight/15),1,"relative","px");
+            for (var i = 0; i < document.getElementsByClassName("clouds").length; i++){
+                spreadObjects(document.getElementsByClassName("clouds")[i].getElementsByTagName("i"),window.innerHeight*.75,window.innerWidth*.75,1,1-(window.innerWidth/2),"relative","px");
+            }
+            smoothScrollTo(document.body.scrollHeight);
+            document.getElementsByTagName("body")[0].setAttribute("onscroll","updateElement()")
+
+        };
+
+        function spreadObjects(x,vm,hm,va,ha,p,e){
+            for (var i=0;i<x.length;i++){
+                x[i].style.position = p;
+                x[i].style.top = Math.floor((Math.random()*vm)+va)+e;
+                x[i].style.left = Math.floor((Math.random()*hm)+ha)+e;
+            }
+        }
+
+        function updateElement() {
+            getMovingElements(document.getElementsByClassName("row"),function (theObject,increment){
+                theObject.style.position = "relative";
+                theObject.style.left = setElementLeftPosition(theObject,increment);
+            });
+            moveEarth(document.getElementById("earth"));
+            moveRocket(document.getElementById("rocket"));
+            for (var i =0; i < document.getElementById("stars").getElementsByTagName("i").length; i++){
+                document.getElementById("stars").getElementsByTagName("i")[i].style.opacity = (1-(window.pageYOffset/(window.innerHeight*(document.getElementsByClassName("row").length))) -.3);
+            }
+        }
+
+        function moveEarth(earth){
+            earth.style.fontSize=(((window.innerHeight*(document.getElementsByClassName("row").length) - document.getElementById("rocket").getBoundingClientRect().bottom)/window.innerHeight) *100)+"vw";
+            earth.style.left=(((window.innerHeight*(document.getElementsByClassName("row").length) - document.getElementById("rocket").getBoundingClientRect().bottom)/window.innerHeight) + 1.4*20)+"px";
+            earth.style.height = (window.innerHeight*(document.getElementsByClassName("row").length)-window.pageYOffset)/window.innerHeight+.5 + '%';
+            earth.getElementsByTagName("i")[0].style.transform = "rotate(" + (15 + (((window.innerHeight*(document.getElementsByClassName("row").length) - document.getElementById("rocket").getBoundingClientRect().bottom)/window.innerHeight))*4) + "deg)";
+            earth.getElementsByTagName("i")[0].style.right = (window.pageYOffset/window.innerHeight*45) + '%';
+            earth.getElementsByTagName("i")[0].style.bottom = (window.pageYOffset/window.innerHeight*200) + '%';
+            earth.getElementsByTagName("i")[0].style.opacity = (1-(window.pageYOffset/(window.innerHeight*(document.getElementsByClassName("row").length))) +.3);
+        }
+
+        window.smoothScrollTo = (function () {
+            var timer, start, factor;
+
+            return function (target, duration) {
+                var offset = window.pageYOffset,
+                        delta  = target - window.pageYOffset; // Y-offset difference
+                duration = duration || 1000;              // default 1 sec animation
+                start = Date.now();                       // get start time
+                factor = 0;
+
+                if( timer ) {
+                    clearInterval(timer); // stop any running animations
+                }
+
+                function step() {
+                    var y;
+                    factor = (Date.now() - start) / duration; // get interpolation factor
+                    if( factor >= 1 ) {
+                        clearInterval(timer); // stop animation
+                        factor = 1;           // clip to max 1.0
+                    }
+                    y = factor * delta + offset;
+                    window.scrollBy(0, y - window.pageYOffset);
+                }
+
+                timer = setInterval(step,10);
+
+                return timer;
+            };
+        }());
+    </script>
 </body>
 </html>
