@@ -441,7 +441,7 @@
     }
 
     function updateElement() {
-        getMovingElements(document.getElementsByClassName("row"),function (theObject,increment){
+        getMovingElements(function (theObject,increment){
             theObject.style.position = "relative";
             theObject.style.left = setElementLeftPosition(theObject,increment);
         });
@@ -460,20 +460,17 @@
 
     function moveEarth(earth){
         earth.style.fontSize=(((window.innerHeight*(document.getElementsByClassName("row").length) - document.getElementById("rocket").getBoundingClientRect().bottom)/window.innerHeight) *100)+"vw";
-        earth.style.left=(((window.innerHeight*(document.getElementsByClassName("row").length) - document.getElementById("rocket").getBoundingClientRect().bottom)/window.innerHeight) + 1.4*20)+"px";
+        earth.style.left=(((window.innerHeight*(document.getElementsByClassName("row").length) - document.getElementById("rocket").getBoundingClientRect().bottom)/window.innerHeight) + document.getElementsByClassName("row").length*2)+"px";
         earth.style.height = (window.innerHeight*(document.getElementsByClassName("row").length)-window.pageYOffset)/window.innerHeight+.5 + '%';
         earth.getElementsByTagName("i")[0].style.transform = "rotate(" + (15 + (((window.innerHeight*(document.getElementsByClassName("row").length) - document.getElementById("rocket").getBoundingClientRect().bottom)/window.innerHeight))*4) + "deg)";
         earth.getElementsByTagName("i")[0].style.right = (window.pageYOffset/window.innerHeight*45) + '%';
         earth.getElementsByTagName("i")[0].style.bottom = (window.pageYOffset/window.innerHeight*200) + '%';
-        earth.getElementsByTagName("i")[0].style.opacity = (1-(window.pageYOffset/(window.innerHeight*(document.getElementsByClassName("row").length))) +.3);
+        earth.getElementsByTagName("i")[0].style.opacity = 1.3-(window.pageYOffset/(window.innerHeight*(document.getElementsByClassName("row").length)));
     }
 
-    function cloudCallBack(clouds){
+    function cloudCall(clouds){
         for (var k=0;k<clouds.classList.length;k++){
             switch (clouds.classList[k]){
-                case 'fa-1x':
-                    clouds.style.left = setElementLeftPosition(clouds,1);
-                    break;
                 case 'fa-2x':
                     clouds.style.left = setElementLeftPosition(clouds,1);
                     break;
@@ -487,10 +484,9 @@
                     clouds.style.left = setElementLeftPosition(clouds,4);
                     break;
                 default:
-                        //do something?
+                    clouds.style.left = setElementLeftPosition(clouds,.5);
                     ;
             }
-            var leftValue = 0;
         }
     }
 
@@ -502,23 +498,23 @@
             }
     }
 
-    function getMovingElements(row,callback){
-        for(var i = 0;i<row.length;i++){
-            if((window.pageYOffset + (window.innerHeight))>row[i].offsetTop && (window.pageYOffset)<(row[i].offsetTop+(window.innerHeight/2*3))){
-                for(j=0;j<row[i].getElementsByTagName("i").length;j++){
-                    for(k=0;k<row[i].getElementsByTagName("i")[j].classList.length;k++){
-                        switch(row[i].getElementsByTagName("i")[j].classList[k]){
+    function getMovingElements(callback){
+        for(var i = 0;i<document.getElementsByClassName("row").length;i++){
+            if((window.pageYOffset + (window.innerHeight))>document.getElementsByClassName("row")[i].offsetTop && (window.pageYOffset)<(document.getElementsByClassName("row")[i].offsetTop+(window.innerHeight/2*3))){
+                for(j=0;j<document.getElementsByClassName("row")[i].getElementsByTagName("i").length;j++){
+                    for(k=0;k<document.getElementsByClassName("row")[i].getElementsByTagName("i")[j].classList.length;k++){
+                        switch(document.getElementsByClassName("row")[i].getElementsByTagName("i")[j].classList[k]){
                             case 'fa-cloud':
-                                cloudCallBack(row[i].getElementsByTagName("i")[j]);
+                                cloudCall(document.getElementsByClassName("row")[i].getElementsByTagName("i")[j]);
                                 break;
                             case 'fa-plane':
-                                callback(row[i].getElementsByTagName("i")[j],3);
+                                callback(document.getElementsByClassName("row")[i].getElementsByTagName("i")[j],3);
                                 break;
                             case 'fa-moon-o':
-                                callback(row[i].getElementsByTagName("i")[j],6);
+                                callback(document.getElementsByClassName("row")[i].getElementsByTagName("i")[j],6);
                                 break;
                             case 'fa-twitter':
-                                callback(row[i].getElementsByTagName("i")[j],2)
+                                callback(document.getElementsByClassName("row")[i].getElementsByTagName("i")[j],2)
                                 break;
                             default:
                                 ;
